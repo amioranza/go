@@ -90,7 +90,7 @@ func main() {
 		fmt.Printf("The guessed number is >>>>>>>>>> %v <<<<<<<<<<<<\n", random)
 	default:
 		fmt.Println("Usage:")
-		fmt.Println("\trandom <MIN> <MAX>")
-		fmt.Println("\tPlease inform the <MIN> and <MAX> values")
+		fmt.Println("\trandom <MAX> or random <MIN> <MAX>")
+		fmt.Println("\tPlease inform at least one value to guess the number.")
 	}
 }
