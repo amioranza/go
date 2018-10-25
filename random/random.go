@@ -31,7 +31,11 @@ import (
 )
 
 // genRandom generatas the random number based on the nanosec of time
-func genRandom(max uint) uint {
+func genRandom(max uint) (gen uint, err error) {
+	if max == 0 {
+		err = fmt.Errorf("At least the max number is needed and cannot be zero")
+		return 0, err
+	}
 	rand.Seed(time.Now().UnixNano())
 	r := rand.Intn(int(max) + 1)
 	if r == 0 {
@@ -40,7 +44,8 @@ func genRandom(max uint) uint {
 	} else {
 		log.Printf("Rand generated number %v is ok\n", r)
 	}
-	return uint(r)
+	gen = uint(r)
+	return gen, nil
 }
 
 // genRandom2 fills a slice with the range of the numbers specified as parameters and calls genRandom
@@ -63,7 +68,7 @@ func genRandom2(beg, end int) int {
 
 	log.Println("Slice: ", numRange)
 
-	idx := genRandom(uint(size))
+	idx, _ := genRandom(uint(size))
 
 	return numRange[idx-1]
 }
@@ -80,7 +85,7 @@ func main() {
 	switch {
 	case len(os.Args) == 2:
 		max := uint(parseArg(os.Args[1]))
-		random := genRandom(uint(max))
+		random, _ := genRandom(uint(max))
 		fmt.Printf("The guessed number is >>>>>>>>>> %v <<<<<<<<<<<<\n", random)
 	case len(os.Args) == 3:
 		min := parseArg(os.Args[1])
