@@ -1,6 +1,7 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -8,10 +9,9 @@ func Test_genRandom(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    uint
-		wantOut uint
 		wantErr bool
 	}{
-		{name: "teste uint", args: 68, wantOut: 32, wantErr: false},
+		{name: "teste uint", args: 68, wantErr: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -21,8 +21,10 @@ func Test_genRandom(t *testing.T) {
 				return
 			}
 
-			if gotOut != tt.wantOut {
-				t.Errorf("genRandom() = %v, want %v", gotOut, tt.wantOut)
+			tipo := reflect.TypeOf(gotOut).String()
+			if tipo != "uint" {
+				t.Errorf("genRandom() error=%v, wantErr %v", err, tt.wantErr)
+				return
 			}
 		})
 	}
